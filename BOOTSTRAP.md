@@ -126,7 +126,21 @@ Initial wiki created from [source description], covering [date range].
 Articles created: [count per folder]. Source messages processed: [count].
 ```
 
-## STEP 7 — COMMIT AND PUSH
+## STEP 7 — GENERATE state.md
+
+Using all articles you just created, generate the initial state.md. This is a compressed snapshot of current state for token-efficient loading.
+
+Populate:
+- CRITICAL/URGENT/HIGH sections: extract any items with hard deadlines or marked as urgent in the source
+- Workstream Status table: one row per workstream article you created, current status from the article
+- Open Items table: every open item across all workstream and people articles, with owner and estimated days open
+- Active Experiments: any experiment with status Active or Pending decision
+- People Watch List: people with open items assigned to them
+- Key Metrics: every metric with a current known value from metrics/weekly-benchmarks.md
+
+state.md is always a full rewrite. Generate it fresh from the wiki you just built.
+
+## STEP 8 — COMMIT AND PUSH
 
 ```bash
 git add .
@@ -134,7 +148,7 @@ git commit -m "bootstrap: initial wiki from [source] [date range]"
 git push -u origin main
 ```
 
-## STEP 8 — FINAL OUTPUT
+## STEP 9 — FINAL OUTPUT
 
 After pushing, print:
 1. GitHub repo URL

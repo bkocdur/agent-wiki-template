@@ -27,6 +27,16 @@ Your data sources (Slack, meetings, notes)
   Ingest workflow keeps wiki current
 ```
 
+## Token efficiency
+
+The core pattern is state.md as a compressed snapshot layer.
+
+Without state.md: agents fetch index.md + matching workstream files + people files at Step 0. On a mature wiki with 10+ workstreams, this costs 30-40K tokens per run before any live data is pulled.
+
+With state.md: agents fetch one ~800-token file. Individual files are only fetched when a specific gap forces it. On the same wiki, Step 0 costs 800-1,500 tokens.
+
+state.md is regenerated at the end of every briefing run. It is always current as of the last evening cycle. It is never manually edited.
+
 ## Quick start
 
 ### 1. Clone this repo
@@ -71,10 +81,15 @@ Open Claude Code in your wiki directory and paste the contents of `BOOTSTRAP.md`
 Add this as Step 0 in any agent prompt that needs operational context:
 
 ```
-Step 0 — Wiki context: Fetch https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_WIKI_REPO/main/index.md
-and read it. For any workstream, person, or experiment relevant to today's task,
-fetch their article from the same base URL. Use wiki context to identify what has
-changed vs. last known state.
+Step 0 — Wiki context: Fetch state.md from your wiki repo. This single file
+contains current open items, workstream statuses, active experiments, people
+watch list, and key metrics. Use it as your baseline.
+
+Only fetch individual workstream or people files if state.md lacks enough
+detail for today's specific task. Fetch minimum necessary.
+
+Regenerate state.md completely after every agent run that produces new
+decisions or status changes.
 ```
 
 ## Folder structure
@@ -83,8 +98,10 @@ changed vs. last known state.
 agent-wiki-template/
 ├── CLAUDE.md              # Agent schema — rules for reading and writing articles
 ├── BOOTSTRAP.md           # One-time bootstrap prompt — customize and run
+├── state.md               # Compressed state snapshot — load this at Step 0 (auto-regenerated)
 ├── index.md               # Article catalog with status tags (auto-generated)
 ├── log.md                 # Update log (auto-generated)
+├── reports/               # Daily briefing reports (DD.MM.YYYY.md per day)
 ├── workstreams/           # What your team works on
 ├── people/                # Who does what, open items, delivery patterns
 ├── experiments/           # Tests and pilots with hypotheses and results

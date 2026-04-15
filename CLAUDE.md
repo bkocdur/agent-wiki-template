@@ -32,12 +32,27 @@ Then content. Then a **Backlinks** section at the bottom listing related article
 * Every person mentioned in an article gets a backlink to their people/ article.
 * Every experiment mentioned gets a backlink to its experiments/ article.
 
+## Reading the wiki (Step 0)
+
+Load state.md first. This single file contains: CRITICAL/URGENT/HIGH items, workstream statuses, full open items table, active experiments, people watch list, and key metrics.
+
+Only fetch individual workstream or people files if state.md lacks enough detail for the current task. Fetch minimum necessary. Do not fetch files speculatively.
+
 ## Ingest workflow (for updates)
 
-1. Read index.md to understand current wiki state.
-2. Read latest source messages (last 1-2 days from your primary channel).
-3. Identify 2-5 articles that need updating based on new decisions, resolved items, or status changes.
-4. Update each article. Append to log.md. Update index.md if new articles were created.
+After any agent run that produces new decisions, open items, or status changes:
+1. Regenerate state.md completely from the current synthesis (full rewrite, never append).
+2. Append new decisions to decisions/log.md.
+3. Update index.md last_updated and any status summaries that changed.
+4. Update individual workstream or people files only where something actually changed.
+5. Write reports/DD.MM.YYYY.md for the day if running a daily briefing.
+
+state.md rules:
+- Tables only. No prose.
+- CRITICAL = hard deadline 24-48h. URGENT = action this week. HIGH = track closely.
+- Remove resolved items every cycle. Do not carry completed items forward.
+- Days Open increments by 1 daily. Reset to 0 on resolution.
+- Metrics: known values only. No placeholders.
 
 ## Staleness rule
 
@@ -45,7 +60,7 @@ Articles not updated in 7+ days: add [STALE] tag to their entry in index.md.
 
 ## What belongs here
 
-Decisions made (not just discussed). Experiment outcomes with numbers. People: ownership areas, open items, working patterns. Workstream status: current state, blockers, next step. Metric definitions and benchmarks.
+Decisions made (not just discussed). Experiment outcomes with numbers. People: ownership areas, open items, working patterns. Workstream status: current state, blockers, next step. Metric definitions and benchmarks. state.md: compressed current state snapshot, regenerated daily by the briefing agent.
 
 ## What does not belong here
 

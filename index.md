@@ -6,6 +6,9 @@
 Last updated: DD.MM.YYYY
 Source: [Your source description]
 
+## State
+* [[state.md]] - Compressed current state snapshot. Load this at Step 0 instead of individual files. Regenerated nightly.
+
 ## Workstreams
 
 * [[workstreams/example]] - Replace with your workstreams after bootstrap | Active
