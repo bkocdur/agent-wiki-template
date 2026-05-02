@@ -1,5 +1,7 @@
 # Agent Wiki
 
+**[agent-wiki-template.vercel.app](https://agent-wiki-template.vercel.app/)** — landing page with a full overview for all audiences.
+
 A structured knowledge base built for AI agents, not humans. Clone this repo, connect your data sources, and run one bootstrap prompt to generate a living wiki from your operational history.
 
 ## What this is
